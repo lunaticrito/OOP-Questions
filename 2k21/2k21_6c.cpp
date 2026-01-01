@@ -9,10 +9,7 @@ protected:
     int age;
 
 public:
-    Person(string n = "", int a = 0) : name(n), age(a) {}
-    void showPerson() {
-        cout << "Name: " << name << ", Age: " << age << endl;
-    }
+    Person(string n="", int a=0) : name(n), age(a) {}
 };
 
 // Student class
@@ -25,50 +22,30 @@ public:
         : Person(n, a), studentID(id) {}
 };
 
-// Undergraduate student
-class UnderGraduate : public Student {
-public:
-    UnderGraduate(string n="", int a=0, string id="")
-        : Student(n, a, id) {}
-};
-
-// Graduate student
-class Graduate : public Student {
-public:
-    Graduate(string n="", int a=0, string id="")
-        : Student(n, a, id) {}
-};
-
 // Teacher class
 class Teacher : virtual public Person {
 protected:
-    string dept;
+    string department;
 
 public:
     Teacher(string n="", int a=0, string d="")
-        : Person(n, a), dept(d) {}
+        : Person(n, a), department(d) {}
 };
 
-// Officer class
-class Officer : virtual public Person {
-protected:
-    string section;
-
+// Undergraduate inherits Student + Teacher
+class UnderGraduate : public Student, public Teacher {
 public:
-    Officer(string n="", int a=0, string s="")
-        : Person(n, a), section(s) {}
+    UnderGraduate(string n, int a, string id, string dept)
+        : Person(n, a),
+          Student(n, a, id),
+          Teacher(n, a, dept) {}
 };
 
-// Teacher who is also a graduate student
-class TeacherGraduate : public Teacher, public Graduate {
+// Graduate inherits Student + Teacher
+class Graduate : public Student, public Teacher {
 public:
-    TeacherGraduate(string n, int a, string d, string id)
-        : Person(n, a), Teacher(n, a, d), Graduate(n, a, id) {}
-};
-
-// Officer who is also a graduate student
-class OfficerGraduate : public Officer, public Graduate {
-public:
-    OfficerGraduate(string n, int a, string s, string id)
-        : Person(n, a), Officer(n, a, s), Graduate(n, a, id) {}
+    Graduate(string n, int a, string id, string dept)
+        : Person(n, a),
+          Student(n, a, id),
+          Teacher(n, a, dept) {}
 };
